@@ -16,6 +16,28 @@
 </head>
 <body>
 
+  <?php
+    $erro     = false;
+    $mensagem = null;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      //VALIDEI SE ESTA TUDO VAZIO OU ALGUM VAZIO
+      if(empty($_POST['nome']) OR empty($_POST['usuario'])){
+        $erro     = true;
+        $mensagem = 'Preencha os campos obrigatórios';
+      }elseif($_POST['senha']  !=  $_POST['confirmarSenha']){
+        //VALIDEI SENHAS DIFERENTES
+        $erro     = true;
+        $mensagem = 'Senha são diferentes!';
+      }else{
+        //CONTINUAR O CODIGO
+
+
+      }
+
+    }
+   ?>
+
   <section class="pagina-login">
     <div class="login">
 
@@ -28,12 +50,18 @@
 
           <div class="row">
             <div class="col-sm-12">
-              <div class="alert alert-success">
-                Cadastrado com sucesso!
-              </div>
-              <div class="alert alert-danger">
-                Erro do cadastro!
-              </div>
+
+              <?php
+              if($erro == true){
+                ?>
+                <!-- <div class="alert alert-success">
+                  Cadastrado com sucesso!
+                </div> -->
+                <div class="alert alert-danger">
+                  <?php echo $mensagem ?>
+                </div>
+              <?php  }  ?>
+
             </div>
           </div>
 

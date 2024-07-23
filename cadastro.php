@@ -19,6 +19,7 @@
   <?php
     $erro     = false;
     $mensagem = null;
+    $dadosUsuario = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       //VALIDEI SE ESTA TUDO VAZIO OU ALGUM VAZIO
@@ -30,6 +31,21 @@
         $erro     = true;
         $mensagem = 'Senha são diferentes!';
       }else{
+      $condicao = 'usuario = "'.$_POST['usuario'].'"';
+      $obTabela = new Tabela('usuario');
+      $retorno = $obTabela->select($condicao)();
+    
+      if(is_object($retorno)){
+        $dadosUsuario = ['nome' =>$_POST['nome'],'usuario'=>$_POST['usuario'],'senha'=>$_POST['senha']];
+        $logado = true;
+        $cadastro = true;
+
+      }else{
+        $erro = true;
+        $mensagem ='Usuário já cadastrado!';
+      }
+
+
         //CONTINUAR O CODIGO
 
 
